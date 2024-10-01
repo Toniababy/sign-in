@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="signin.css">
+
+</head>
+<body>
+    <nav>
+        <p>TECHNIA</p>
+    </nav>
+    <h2>WELCOME</h2>
+    <div class="bg">
+        <form id="signInForm">
+            <h3>Please Fill this to Begin</h3>
+            Email: <input type="email" id="email" required><br><br>
+            Username: <input type="text" id="username" required><br><br>
+            Password: <input type="password" id="password" required><br><br>
+            Confirm Password: <input type="password" id="confirmPassword" required><br><br>
+            <input type="checkbox" id="termsCheckbox" required> I agree to the Terms and Conditions<br><br>
+            <input type="submit" value="Sign In" id="submit" onclick="validateForm()">
+        </form>
+    
+
+    </div>
+</body>
+</html>
+<script>
+    function validateForm(ev) {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const terms = document.getElementById('termsCheckbox').checked;
+    // let userObject = {username: username, isUsed:false}
+    //         arr.push(userObject) 
+    //         let page = arr
+    if (password !== confirmPassword) {
+        alert('Passwords do not match.')
+    }
+    else if (!terms) {
+     alert('You must agree to the Terms and Conditions.')
+    }  else{
+        
+        let users = localStorage.getItem('users');
+if (users) {
+    users = JSON.parse(users);
+} else {
+    users = [];
+}
+
+// Check if user already exists
+let existingUser = users.find(user => user.username === username);
+
+if (existingUser) {
+
+    if (existingUser.isSignedIn) {
+        alert(`You have already signed in, ${username}.`);
+    } else {
+
+        existingUser.isSignedIn = true;
+        localStorage.setItem('users', JSON.stringify(users));
+        alert(`You are successfully Signed in, ${username}`);
+    }
+} else {
+
+    users.push({ username, password, isSignedIn: true });
+    localStorage.setItem('users', JSON.stringify(users));
+    alert(`You are successfully Signed in, ${username}`);
+}
+
+    }
+}   
+    </script>
