@@ -63,11 +63,6 @@ if (existingUser) {
         localStorage.setItem('users', JSON.stringify(users));
         alert(`You are successfully Signed in, ${username}`);
     }
-} else {
-
-    users.push({ username, password, isSignedIn: true });
-    localStorage.setItem('users', JSON.stringify(users));
-    alert(`You are successfully Signed in, ${username}`);
 }
 
     }
